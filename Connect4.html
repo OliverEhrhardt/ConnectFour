@@ -3,13 +3,15 @@
 	<head>
 		<script type="text/javascript">
 			function change(){
-				var x = document.getElementById('board0');
-				if(x.style.background = "gold"){
-					x.style.background = "black";
-				}
-				else{
-					x.style.background = "gold";
-				}
+			var x = document.getElementById('board0');
+			var y = x.children;
+			if(y[y.length-1].style.background = "white"){
+				y[y.length-1].style.background = "black";
+			}
+			else if(y[y.length-1].style.background = "black"){
+				y[y.length-1].style.background = "white";
+			}
+
 			}
 			window.onload = function(){
 				document.getElementById('board0').addEventListener("click", change, false);
