@@ -10,15 +10,17 @@
 				this.pieces = pieces;
 				this.numPieces = numPieces;
 				this.add = function(){
-					if(turn === true){
+					if(turn === true && this.numPieces !== 7){
 						this.pieces[this.pieces.length - this.numPieces].style.background = "red";
 						this.numPieces++;
 						turn = false;
 					}
 					else{
-						this.pieces[this.pieces.length - this.numPieces].style.background = "black";
-						this.numPieces++;
-						turn = true;
+						if(this.numPieces !== 7){
+							this.pieces[this.pieces.length - this.numPieces].style.background = "black";
+							this.numPieces++;
+							turn = true;
+						}
 					}
 				}
 			}
@@ -34,20 +36,23 @@
 		</script>
 		<style type="text/css">
 			.board{
-			position absolute;
-			height: 610px;
-			width: 100px;
-			background: gold;
-			float: left;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				position absolute;
+				height: 610px;
+				width: 100px;
+				background: gold;
+				float: left;
 			}
 			.circle{
-			position: relative;
-			border-radius: 50%;
-			width: 90px;
-			height: 90px;
-			margin-top: 10px;
-			margin-left:5px;
-			background: white;
+				position: relative;
+				border-radius: 50%;
+				width: 90px;
+				height: 90px;
+				margin-top: 10px;
+				margin-left:5px;
+				background: white;
 			}
 		</style>
 	</head>
