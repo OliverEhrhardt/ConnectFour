@@ -2,20 +2,35 @@
 <html>
 	<head>
 		<script type="text/javascript">
-			function change(){
-			var x = document.getElementById('board0');
-			var y = x.children;
-			if(y[y.length-1].style.background = "white"){
-				y[y.length-1].style.background = "black";
+			var turn = true
+			function $(id){
+			return document.getElementById(id);
 			}
-			else{
-				y[y.length-1].style.background = "white";
-			}
-
+			function columb(pieces, numPieces){
+				this.pieces = pieces;
+				this.numPieces = numPieces;
+				this.add = function(){
+					if(turn === true){
+						this.pieces[this.pieces.length - this.numPieces].style.background = "red";
+						this.numPieces++;
+						turn = false;
+					}
+					else{
+						this.pieces[this.pieces.length - this.numPieces].style.background = "black";
+						this.numPieces++;
+						turn = true;
+					}
+				}
 			}
 			window.onload = function(){
-				document.getElementById('board0').addEventListener("click", change, false);
+				c1 = new columb($('board0').children, 1);
+				c2 = new columb($('board1').children, 1);
+				c3 = new columb($('board2').children, 1);
+				c4 = new columb($('board3').children, 1);
+				c5 = new columb($('board4').children, 1);
+				c6 = new columb($('board5').children, 1);
 			}
+
 		</script>
 		<style type="text/css">
 			.board{
@@ -37,7 +52,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="board" id="board0"> 
+		<div class="board" id="board0" onclick="c1.add()"> 
 			<div class="circle" id="circle1"></div>
 			<div class="circle" id="circle2"></div>
 			<div class="circle" id="circle3"></div>
@@ -45,7 +60,7 @@
 			<div class="circle" id="circle5"></div>
 			<div class="circle" id="circle6"></div>
 		</div>
-		<div class="board" id="board1">
+		<div class="board" id="board1" onclick="c2.add()">
 			<div class="circle" id="circle7"></div>
 			<div class="circle" id="circle8"></div>
 			<div class="circle" id="circle9"></div>
@@ -53,7 +68,7 @@
 			<div class="circle" id="circle11"></div>
 			<div class="circle" id="circle12"></div>
 		</div>
-		<div class="board" id="board2">
+		<div class="board" id="board2" onclick="c3.add()">
 			<div class="circle" id="circle13"></div>
 			<div class="circle" id="circle14"></div>
 			<div class="circle" id="circle15"></div>
@@ -61,7 +76,7 @@
 			<div class="circle" id="circle17"></div>
 			<div class="circle" id="circle18"></div>
 		</div>
-		<div class="board" id="board3">
+		<div class="board" id="board3" onclick="c4.add()">
 			<div class="circle" id="circle19"></div>
 			<div class="circle" id="circle20"></div>
 			<div class="circle" id="circle21"></div>
@@ -69,7 +84,7 @@
 			<div class="circle" id="circle23"></div>
 			<div class="circle" id="circle24"></div>
 		</div>
-		<div class="board" id="board4">
+		<div class="board" id="board4" onclick="c5.add()">
 			<div class="circle" id="circle25"></div>
 			<div class="circle" id="circle26"></div>
 			<div class="circle" id="circle27"></div>
@@ -77,7 +92,7 @@
 			<div class="circle" id="circle29"></div>
 			<div class="circle" id="circle30"></div>
 		</div>
-		<div class="board" id="board5">
+		<div class="board" id="board5" onclick="c6.add()">
 			<div class="circle" id="circle31"></div>
 			<div class="circle" id="circle32"></div>
 			<div class="circle" id="circle33"></div>
