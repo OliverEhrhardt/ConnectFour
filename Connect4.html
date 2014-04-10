@@ -30,9 +30,9 @@
 							turn = true;
 						}
 					}
+					checkWin();	
 				}
 			}
-			
 			window.onload = function(){
 				c1 = new columb($('board0').children, 1, []);
 				c2 = new columb($('board1').children, 1, []);
@@ -43,6 +43,7 @@
 			}
 			
 			function checkWin(){
+				console.log("checking win");
 				win(c1, c2, c3, c4);
 				win(c2, c3, c4, c5);
 				win(c3, c4, c5, c6);
@@ -57,6 +58,29 @@
 					if(w[a] === true && x[a] === true && y[a] === true && z[a] === true){
 						alert("win");
 					}
+					else if (w[a] === false && x[a] === false && y[a] === false && z[a] === false){
+						alert("win");
+					}
+					else if (w[a] === false && w[a+1] === false && w[a+2] === false && w[a+3] === false){
+						alert("win");
+					}
+					else if (w[a] === true && w[a-1] === true && w[a-2] === true && w[a-3] === true){
+						alert("win");
+					}
+					else if (w[a] === false && x[a+1] === false && y[a+2] === false && z[a+3] === false){
+						alert("win");
+					}
+					else if (w[a] === false && x[a-1] === false && y[a-2] === false && z[a-3] === false){
+						alert("win");
+					}
+					else if (w[a] === true && x[a+1] === true && y[a+2] === true && z[a+3] === true){
+						alert("win");
+					}
+					else if (w[a] === true && x[a-1] === true && y[a-2] === true && z[a-3] === true){
+						alert("win");
+					}
+
+
 				}
 			}
 		</script>
@@ -83,7 +107,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="board" id="board0" onclick="c1.add()" onchange="checkWin()"> 
+		<div class="board" id="board0" onclick="c1.add()"> 
 			<div class="circle" id="circle1"></div>
 			<div class="circle" id="circle2"></div>
 			<div class="circle" id="circle3"></div>
@@ -91,7 +115,7 @@
 			<div class="circle" id="circle5"></div>
 			<div class="circle" id="circle6"></div>
 		</div>
-		<div class="board" id="board1" onclick="c2.add()" onchange="checkWin()">
+		<div class="board" id="board1" onclick="c2.add()">
 			<div class="circle" id="circle7"></div>
 			<div class="circle" id="circle8"></div>
 			<div class="circle" id="circle9"></div>
@@ -99,7 +123,7 @@
 			<div class="circle" id="circle11"></div>
 			<div class="circle" id="circle12"></div>
 		</div>
-		<div class="board" id="board2" onclick="c3.add()" onchange="checkWin()">
+		<div class="board" id="board2" onclick="c3.add()">
 			<div class="circle" id="circle13"></div>
 			<div class="circle" id="circle14"></div>
 			<div class="circle" id="circle15"></div>
@@ -107,7 +131,7 @@
 			<div class="circle" id="circle17"></div>
 			<div class="circle" id="circle18"></div>
 		</div>
-		<div class="board" id="board3" onclick="c4.add()" onchange="checkWin()">
+		<div class="board" id="board3" onclick="c4.add()">
 			<div class="circle" id="circle19"></div>
 			<div class="circle" id="circle20"></div>
 			<div class="circle" id="circle21"></div>
@@ -115,7 +139,7 @@
 			<div class="circle" id="circle23"></div>
 			<div class="circle" id="circle24"></div>
 		</div>
-		<div class="board" id="board4" onclick="c5.add()" onchange="checkWin()">
+		<div class="board" id="board4" onclick="c5.add()">
 			<div class="circle" id="circle25"></div>
 			<div class="circle" id="circle26"></div>
 			<div class="circle" id="circle27"></div>
@@ -123,7 +147,7 @@
 			<div class="circle" id="circle29"></div>
 			<div class="circle" id="circle30"></div>
 		</div>
-		<div class="board" id="board5" onclick="c6.add()" onchange="checkWin()">
+		<div class="board" id="board5" onclick="c6.add()">
 			<div class="circle" id="circle31"></div>
 			<div class="circle" id="circle32"></div>
 			<div class="circle" id="circle33"></div>
