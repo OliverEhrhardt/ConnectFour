@@ -8,8 +8,167 @@
 			return document.getElementById(id);
 			}
 			
-			function columb(pieces, numPieces, posColor){
-				this.pieces = pieces;
+			function columb(pieces, numPieces, po<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			function $(id){
+				return document.getElementById(id);
+			}
+			var turn = true;
+			
+			function build(column, pieces, colorId){				
+				this.column = column;
+				for(var a in this.column){
+					this.column[a].pieces = pieces;
+					var x = this.column[a];
+					for(var b in x.children){
+						x.children[b].colorId = colorId;
+					}
+				}
+				this.add = function(c){
+					var x = this.column[c];
+					if(turn === true && x.pieces < 7){
+						x.children[x.children.length - x.pieces].style.background = "red";
+						x.children[x.children.length - x.pieces].colorId = "red";
+						x.pieces++;
+						turn = false;
+					}
+					else if(x.pieces < 7){
+						x.children[x.children.length - x.pieces].style.background = "black";
+						x.children[x.children.length - x.pieces].colorId = "black";
+						x.pieces++;
+						turn = true;
+					}
+					this.checkVert();
+				}
+				this.checkVert = function(){
+					var match = 0;
+					for(a in this.column){
+						var x = this.column[a];
+						for(b in x.children){
+							if(x.children[b].colorId === "red" && x.children[b-1].colorId === "red"){
+								match++;
+								
+							}
+							else{
+								match = 0;
+								alert("you win");
+							}
+						}
+					}
+					if(match === 3){
+						return true;
+					}
+				}
+			}
+			
+			window.onload = function(){
+				board = new build($("container").children, 1, "white");
+			}
+			
+			function checkVert(){
+				var match = 0;
+				for(a in board.column){
+					var x = board.column[a];
+					for(b in x.children){
+						if(x.children[b].colorId === "red" && x.children[b-1].colorId === "red"){
+							match++;
+							
+						}
+						else{
+							match = 0;
+						}
+					}
+				}
+				if(match === 2){
+					return true;
+				}
+			}
+		</script>
+		<style type="text/css">
+			.board{
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				position absolute;
+				height: 610px;
+				width: 100px;
+				background: gold;
+				float: left;
+			}
+			.circle{
+				position: relative;
+				border-radius: 50%;
+				width: 90px;
+				height: 90px;
+				margin-top: 10px;
+				margin-left:5px;
+				background: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div class="board" id="board0" onclick="board.add(0)"> 
+				<div class="circle" id="circle1"></div>
+				<div class="circle" id="circle2"></div>
+				<div class="circle" id="circle3"></div>
+				<div class="circle" id="circle4"></div>
+				<div class="circle" id="circle5"></div>
+				<div class="circle" id="circle6"></div>
+			</div>
+			<div class="board" id="board1" onclick="board.add(1)">
+				<div class="circle" id="circle7"></div>
+				<div class="circle" id="circle8"></div>
+				<div class="circle" id="circle9"></div>
+				<div class="circle" id="circle10"></div>
+				<div class="circle" id="circle11"></div>
+				<div class="circle" id="circle12"></div>
+			</div>
+			<div class="board" id="board2" onclick="board.add(2)">
+				<div class="circle" id="circle13"></div>
+				<div class="circle" id="circle14"></div>
+				<div class="circle" id="circle15"></div>
+				<div class="circle" id="circle16"></div>
+				<div class="circle" id="circle17"></div>
+				<div class="circle" id="circle18"></div>
+			</div>
+			<div class="board" id="board3" onclick="board.add(3)">
+				<div class="circle" id="circle19"></div>
+				<div class="circle" id="circle20"></div>
+				<div class="circle" id="circle21"></div>
+				<div class="circle" id="circle22"></div>
+				<div class="circle" id="circle23"></div>
+				<div class="circle" id="circle24"></div>
+			</div>
+			<div class="board" id="board4" onclick="board.add(4)">
+				<div class="circle" id="circle25"></div>
+				<div class="circle" id="circle26"></div>
+				<div class="circle" id="circle27"></div>
+				<div class="circle" id="circle28"></div>
+				<div class="circle" id="circle29"></div>
+				<div class="circle" id="circle30"></div>
+			</div>
+			<div class="board" id="board5" onclick="board.add(5)">
+				<div class="circle" id="circle31"></div>
+				<div class="circle" id="circle32"></div>
+				<div class="circle" id="circle33"></div>
+				<div class="circle" id="circle34"></div>
+				<div class="circle" id="circle35"></div>
+				<div class="circle" id="circle36"></div>
+			</div>
+			<div class="board" id="board6" onclick="board.add(6)">
+				<div class="circle" id="circle31"></div>
+				<div class="circle" id="circle32"></div>
+				<div class="circle" id="circle33"></div>
+				<div class="circle" id="circle34"></div>
+				<div class="circle" id="circle35"></div>
+				<div class="circle" id="circle36"></div>
+			</div>
+		</div>
+	</body>
+</html>
 				this.numPieces = numPieces;
 				this.posColor = posColor;
 				this.add = function(){
