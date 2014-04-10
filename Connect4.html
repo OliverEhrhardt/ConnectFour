@@ -73,9 +73,10 @@
 				var red = 0;
 				var black = 0;
 				var horzCheck = 0;
-				while(horzCheck < 8){
+				while(horzCheck < board.column[0].children.length){
 					for(a in board.column){
-						if(board.column[a].children[horzCheck].colorId = true){
+						var x = board.column[a];
+						if(x.children[horzCheck].colorId === true){
 							red++;
 							console.log("red" + red);
 							if(red === 4){
@@ -86,7 +87,7 @@
 						else{
 							red = 0;
 						}
-						if(board.column[a].children[horzCheck].colorId = false){
+						if(x.children[horzCheck].colorId === false){
 							black++;
 							console.log("black" + black);
 							if(black === 4){
