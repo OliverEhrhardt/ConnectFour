@@ -2,6 +2,9 @@
 <html>
 	<head>
 		<script type="text/javascript">
+			window.onload = function(){
+				board = new build($("container").children, 1, null);
+			}
 			function $(id){
 				return document.getElementById(id);
 			}
@@ -20,61 +23,86 @@
 					var x = this.column[c];
 					if(turn === true && x.pieces < 7){
 						x.children[x.children.length - x.pieces].style.background = "red";
-						x.children[x.children.length - x.pieces].colorId = "red";
+						x.children[x.children.length - x.pieces].colorId = true;
 						x.pieces++;
 						turn = false;
 					}
 					else if(x.pieces < 7){
 						x.children[x.children.length - x.pieces].style.background = "black";
-						x.children[x.children.length - x.pieces].colorId = "black";
+						x.children[x.children.length - x.pieces].colorId = false;
 						x.pieces++;
 						turn = true;
 					}
-					this.checkVert();
+					checkHorz();
 				}
-				this.checkVert = function(){
-					var match = 0;
-					for(a in this.column){
-						var x = this.column[a];
-						for(b in x.children){
-							if(x.children[b].colorId === "red" && x.children[b-1].colorId === "red"){
-								match++;
-								
-							}
-							else{
-								match = 0;
-								alert("you win");
-							}
-						}
-					}
-					if(match === 3){
-						return true;
-					}
-				}
-			}
-			
-			window.onload = function(){
-				board = new build($("container").children, 1, "white");
 			}
 			
 			function checkVert(){
-				var match = 0;
+				var red = 0;
+				var black = 0;
 				for(a in board.column){
 					var x = board.column[a];
 					for(b in x.children){
-						if(x.children[b].colorId === "red" && x.children[b-1].colorId === "red"){
-							match++;
-							
+						var y = x.children[b];
+						if(y.colorId === true){
+							red++;
+							if(red === 4){
+								return "red";
+								break;
+							}
 						}
 						else{
-							match = 0;
+							red = 0;
+						}
+						if(y.colorId === false){
+							black++;
+							if(black === 4){
+								return "black";
+								break;
+							}
+						}
+						else{
+							black = 0;
 						}
 					}
+
 				}
-				if(match === 2){
-					return true;
+
+			}
+			function checkHorz(){
+				var red = 0;
+				var black = 0;
+				var horzCheck = 0;
+				while(horzCheck < 8){
+					for(a in board.column){
+						if(board.column[a].children[horzCheck].colorId = true){
+							red++;
+							console.log("red" + red);
+							if(red === 4){
+								return "red";
+								break;
+							}
+						}
+						else{
+							red = 0;
+						}
+						if(board.column[a].children[horzCheck].colorId = false){
+							black++;
+							console.log("black" + black);
+							if(black === 4){
+								return "black";
+								break;
+							}
+						}
+						else{
+							black = 0;
+						}
+					}
+					horzCheck++;
 				}
 			}
+			
+
 		</script>
 		<style type="text/css">
 			.board{
