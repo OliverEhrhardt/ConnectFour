@@ -43,10 +43,10 @@
 			}
 			
 			function checkWin(){
-				console.log("checking win");
-				win(c1, c2, c3, c4);
-				win(c2, c3, c4, c5);
-				win(c3, c4, c5, c6);
+				if(win(c1, c2, c3, c4) === true || win(c2, c3, c4, c5) === true || win(c3, c4, c5, c6) === true){
+					alert("win");
+				}
+			
 			}
 
 			function win(obj1, obj2, obj3, obj4){
@@ -56,28 +56,46 @@
 				var z = obj4.posColor;
 				for(var a=0; a<6; a++){
 					if(w[a] === true && x[a] === true && y[a] === true && z[a] === true){
-						alert("win");
+						return true;
 					}
 					else if (w[a] === false && x[a] === false && y[a] === false && z[a] === false){
-						alert("win");
-					}
+						return true;
+										}
 					else if (w[a] === false && w[a+1] === false && w[a+2] === false && w[a+3] === false){
-						alert("win");
+						return true;
 					}
 					else if (w[a] === true && w[a-1] === true && w[a-2] === true && w[a-3] === true){
-						alert("win");
+						return true;
 					}
+					else if (y[a] === false && y[a+1] === false && y[a+2] === false && y[a+3] === false){
+						return true;
+					}
+					else if (y[a] === true && y[a-1] === true && y[a-2] === true && y[a-3] === true){
+						return true;
+					}
+					else if (x[a] === false && x[a+1] === false && x[a+2] === false && x[a+3] === false){
+						return true;
+					}
+					else if (x[a] === true && x[a-1] === true && x[a-2] === true && x[a-3] === true){
+						return true;
+					}
+					else if (z[a] === false && z[a+1] === false && z[a+2] === false && z[a+3] === false){
+						return true;
+					}
+					else if (z[a] === true && z[a-1] === true && z[a-2] === true && z[a-3] === true){
+						return true;
+					}											
 					else if (w[a] === false && x[a+1] === false && y[a+2] === false && z[a+3] === false){
-						alert("win");
+						return true;
 					}
 					else if (w[a] === false && x[a-1] === false && y[a-2] === false && z[a-3] === false){
-						alert("win");
+						return true;
 					}
 					else if (w[a] === true && x[a+1] === true && y[a+2] === true && z[a+3] === true){
-						alert("win");
+						return true;
 					}
 					else if (w[a] === true && x[a-1] === true && y[a-2] === true && z[a-3] === true){
-						alert("win");
+						return true;
 					}
 
 
