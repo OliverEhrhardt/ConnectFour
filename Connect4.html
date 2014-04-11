@@ -21,19 +21,19 @@
 				}
 				this.add = function(c){
 					var x = this.column[c];
-					if(turn === true && x.pieces < x.children.length){
+					if(turn === true && x.pieces < x.children.length + 1){
 						x.children[x.children.length - x.pieces].style.background = "#780000";
 						x.children[x.children.length - x.pieces].colorId = true;
 						x.pieces++;
 						turn = false;
 					}
-					else if(x.pieces < x.children.length){
+					else if(x.pieces < x.children.length + 1){
 						x.children[x.children.length - x.pieces].style.background = "#005d78";
 						x.children[x.children.length - x.pieces].colorId = false;
 						x.pieces++;
 						turn = true;
 					}
-					checkHorz();
+					checkPosDiag();
 				}
 			}
 			
@@ -104,7 +104,52 @@
 			}
 			
 			function checkPosDiag(){
-				
+				var red = 0;
+				var black = 0;
+				var max = 3;
+				var saveMax = max;
+				var reset = false;
+				var run = 0;
+				while(run<10){
+					for(a=0;a<board.column.length;a++){
+						var x = board.column[a];
+						for(b=max;b<x.children.length;b--){
+							console.log(x.children[b])
+							max--;
+							if(max === -1){
+								max = saveMax + 1;
+								saveMax = max;
+								reset = true;
+							}
+							if(x.children[b] === true){
+								red++;
+								console.log("red:" + red);
+								if(red === 4){
+									return "red";
+								}
+							}
+							else{
+								red = 0;
+							}
+							if(x.children[b] === true){
+								black++;
+								console.log("black:" + black);
+								if(black === 4){
+									return "black";
+								}
+							}
+							else{
+								black = 0;
+							}
+							break;
+						}
+						if(reset === true){
+							reset = false;
+							break;
+						}
+					}
+					run++;
+				}
 			}
 			
 
