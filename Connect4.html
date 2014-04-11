@@ -4,12 +4,23 @@
 		<script type="text/javascript">
 			window.onload = function(){
 				board = new build($("container").children, 1, null);
+				document.getElementById("container").addEventListener("click", isTurn, false);
 			}
 			function $(id){
 				return document.getElementById(id);
 			}
 			var turn = true;
-			
+			function isTurn(){
+				var x = $("turns");
+				if(turn === true){
+					x.innerHTML = "Red";
+					x.style.color = "#780000";
+				}
+				else if(turn === false){
+					x.innerHTML = "Blue";
+					x.style.color = "#005d78";
+				}
+			}
 			function build(column, pieces, colorId){				
 				this.column = column;
 				for(var a in this.column){
@@ -33,21 +44,24 @@
 						x.pieces++;
 						turn = true;
 					}
-					checkPosDiag();
+					checkWin();
 				}
 			}
 			
 			function checkVert(){
+				console.log("checking verticle");
 				var red = 0;
 				var black = 0;
-				for(a in board.column){
+				for(a=0;a<board.column.length;a++){
 					var x = board.column[a];
-					for(b in x.children){
+					for(b=0;b<x.children.length;b++){
 						var y = x.children[b];
 						if(y.colorId === true){
 							red++;
+							console.log("red:"+red);
 							if(red === 4){
-								return "red";
+								console.log(red);
+								return "red"; break;
 								break;
 							}
 						}
@@ -56,6 +70,7 @@
 						}
 						if(y.colorId === false){
 							black++;
+							console.log("black:"+black);
 							if(black === 4){
 								return "black";
 								break;
@@ -70,6 +85,7 @@
 
 			}
 			function checkHorz(){
+				console.log("checking horizontal");
 				var red = 0;
 				var black = 0;
 				var horzCheck = 0;
@@ -78,9 +94,9 @@
 						var x = board.column[a];
 						if(x.children[horzCheck].colorId === true){
 							red++;
-							console.log("red" + red);
+							console.log("red:" + red);
 							if(red === 4){
-								return "red";
+								return "red"; 
 								break;
 							}
 						}
@@ -89,7 +105,7 @@
 						}
 						if(x.children[horzCheck].colorId === false){
 							black++;
-							console.log("black" + black);
+							console.log("black:" + black);
 							if(black === 4){
 								return "black";
 								break;
@@ -104,58 +120,240 @@
 			}
 			
 			function checkPosDiag(){
+				console.log("checking  positive diagonal");
 				var red = 0;
 				var black = 0;
-				var max = 3;
-				var saveMax = max;
+				var diff = 1;
+				var save = diff;
 				var reset = false;
 				var run = 0;
-				while(run<10){
+				while(run < board.column[0].children.length){
 					for(a=0;a<board.column.length;a++){
 						var x = board.column[a];
-						for(b=max;b<x.children.length;b--){
-							console.log(x.children[b])
-							max--;
-							if(max === -1){
-								max = saveMax + 1;
-								saveMax = max;
+						for(b=x.children.length-diff;b>-1;b--){
+							if(b === 0){
 								reset = true;
 							}
-							if(x.children[b] === true){
+							if(x.children[b].colorId === true){
 								red++;
 								console.log("red:" + red);
 								if(red === 4){
 									return "red";
+									break;
 								}
 							}
 							else{
 								red = 0;
 							}
-							if(x.children[b] === true){
+							if(x.children[b].colorId === false){
 								black++;
 								console.log("black:" + black);
 								if(black === 4){
 									return "black";
+									break;
 								}
 							}
 							else{
 								black = 0;
 							}
+							diff++;
 							break;
 						}
 						if(reset === true){
 							reset = false;
+							diff = save + 1;
+							save = diff;
 							break;
 						}
 					}
 					run++;
+					if(save === 4){
+						break;
+					}
+				}
+				if(run > 0){
+					run = 0;
+					diff = 1;
+					save = diff;
+				}
+				while(run < board.column[0].children.length){
+					for(a=board.column.length-1;a>0;a--){
+						var x = board.column[a];
+						for(b=diff-1;b<diff;b++){
+							if(b === x.children.length-1){
+								reset = true;
+							}
+							if(x.children[b].colorId === true){
+								red++;
+								console.log("red:" + red);
+								if(red === 4){
+									return "red"; 
+									break;
+								}
+							}
+							else{
+								red = 0;
+							}
+							if(x.children[b].colorId === false){
+								black++;
+								console.log("black:" + black);
+								if(black === 4){
+									return "black";
+									break;
+								}
+							}
+							else{
+								black = 0;
+							}
+							diff++;
+							break;
+						}
+						if(reset === true){
+							reset = false;
+							diff = save + 1;
+							save = diff;
+							break;
+						}
+
+					}
+					run++;
+					if(save === 4){
+						break;
+					}
 				}
 			}
 			
+			function checkNegDiag(){
+				console.log("checking  negative diagonal");
+				var red = 0;
+				var black = 0;
+				var diff = 1;
+				var save = diff;
+				var reset = false;
+				var run = 0;
+				while(run < board.column[0].children.length){
+					for(a=0;a<board.column.length;a++){
+						var x = board.column[a];
+						for(b=diff-1;b<diff;b++){
+							if(b === x.children.length-1){
+								reset = true;
+							}
+							if(x.children[b].colorId === true){
+								red++;
+								console.log("red:" + red);
+								if(red === 4){
+									return "red"; 
+									break;
+								}
+							}
+							else{
+								red = 0;
+							}
+							if(x.children[b].colorId === false){
+								black++;
+								console.log("black:" + black);
+								if(black === 4){
+									return "black";
+									break;
+								}
+							}
+							else{
+								black = 0;
+							}
+							diff++;
+							break;
+						}
+						if(reset === true){
+							reset = false;
+							diff = save + 1;
+							save = diff;
+							break;
+						}
+					}
+					run++;
+					if(save === 4){
+						break;
+					}
+				}
+				if(run > 0){
+					run = 0;
+					diff = 1;
+					save = diff;
+				}
+				while(run < board.column[0].children.length){
+					for(a=board.column.length-1;a>0;a--){
+						var x = board.column[a];
+						for(b=x.children.length-diff;b>-1;b--){
+							if(b === 0){
+								reset = true;
+							}
+							if(x.children[b].colorId === true){
+								red++;
+								console.log("red:" + red);
+								if(red === 4){
+									return "red"; 
+									break;
+								}
+							}
+							else{
+								red = 0;
+							}
+							if(x.children[b].colorId === false){
+								black++;
+								console.log("black:" + black);
+								if(black === 4){
+									return "black";
+									break;
+								}
+							}
+							else{
+								black = 0;
+							}
+							diff++;
+							break;
+						}
+						if(reset === true){
+							reset = false;
+							diff = save + 1;
+							save = diff;
+							break;
+						}
 
+					}
+					run++;
+					if(save === 4){
+						break;
+					}
+				}
+			}
+			
+			function checkWin(){
+				var a = checkVert();
+				var b = checkHorz();
+				var c = checkPosDiag();
+				var d = checkNegDiag();
+				if(a === "red" || b === "red" || c === "red" || d === "red"){
+					alert("you win");
+				}
+				else if(a === "black" || b === "black" || c === "black" || d === "black"){
+					alert("yo win");
+				}
+			}
 		</script>
 		<style type="text/css">
 			Body{background:#474747;}
+			#turns{
+				position:absolute;
+				width:700px;
+				height:100px;
+				left: 50%;
+				margin-left:-350px;
+				font-size:200%;
+				font-family:Tahoma, Geneva, sans-serif;
+				color:#780000;
+				text-align:center;
+				float:top;
+			}
 			#container{
 				position:absolute;
 				width:700px;
@@ -187,6 +385,7 @@
 		</style>
 	</head>
 	<body>
+		<div id="turns">Red</div>
 		<div id="container">
 			<div class="board" id="board0" onclick="board.add(0)"> 
 				<div class="circle" id="circle1"></div>
@@ -237,12 +436,12 @@
 				<div class="circle" id="circle36"></div>
 			</div>
 			<div class="board" id="board6" onclick="board.add(6)">
-				<div class="circle" id="circle31"></div>
-				<div class="circle" id="circle32"></div>
-				<div class="circle" id="circle33"></div>
-				<div class="circle" id="circle34"></div>
-				<div class="circle" id="circle35"></div>
-				<div class="circle" id="circle36"></div>
+				<div class="circle" id="circle37"></div>
+				<div class="circle" id="circle38"></div>
+				<div class="circle" id="circle39"></div>
+				<div class="circle" id="circle40"></div>
+				<div class="circle" id="circle41"></div>
+				<div class="circle" id="circle42"></div>
 			</div>
 		</div>
 	</body>
