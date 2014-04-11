@@ -21,14 +21,14 @@
 				}
 				this.add = function(c){
 					var x = this.column[c];
-					if(turn === true && x.pieces < 7){
-						x.children[x.children.length - x.pieces].style.background = "red";
+					if(turn === true && x.pieces < x.children.length){
+						x.children[x.children.length - x.pieces].style.background = "#780000";
 						x.children[x.children.length - x.pieces].colorId = true;
 						x.pieces++;
 						turn = false;
 					}
-					else if(x.pieces < 7){
-						x.children[x.children.length - x.pieces].style.background = "black";
+					else if(x.pieces < x.children.length){
+						x.children[x.children.length - x.pieces].style.background = "#005d78";
 						x.children[x.children.length - x.pieces].colorId = false;
 						x.pieces++;
 						turn = true;
@@ -74,7 +74,7 @@
 				var black = 0;
 				var horzCheck = 0;
 				while(horzCheck < board.column[0].children.length){
-					for(a in board.column){
+					for(a = 0;a<board.column.length;a++){
 						var x = board.column[a];
 						if(x.children[horzCheck].colorId === true){
 							red++;
@@ -103,9 +103,23 @@
 				}
 			}
 			
+			function checkPosDiag(){
+				
+			}
+			
 
 		</script>
 		<style type="text/css">
+			Body{background:#474747;}
+			#container{
+				position:absolute;
+				width:700px;
+				height:610px;
+				top:50%;
+				left:50%;
+				margin-top:-305px;
+				margin-left:-350px;
+			}
 			.board{
 				-webkit-user-select: none;
 				-moz-user-select: none;
@@ -113,7 +127,6 @@
 				position absolute;
 				height: 610px;
 				width: 100px;
-				background: gold;
 				float: left;
 			}
 			.circle{
@@ -123,7 +136,8 @@
 				height: 90px;
 				margin-top: 10px;
 				margin-left:5px;
-				background: white;
+				box-shadow:2px 2px 5px rgba(0, 0, 0, .3) inset;
+				background: #373737;
 			}
 		</style>
 	</head>
