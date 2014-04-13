@@ -212,8 +212,24 @@
 								a--;
 							}
 					}
+<<<<<<< HEAD
 					
 					run++
+=======
+				}
+			}
+			
+			function checkWin(){
+				var a = checkVert();
+				var b = checkHorz();
+				var c = checkPosDiag();
+				var d = checkNegDiag();
+				if(a === "red" || b === "red" || c === "red" || d === "red"){
+					alert("Red Wins!");
+				}
+				else if(a === "black" || b === "black" || c === "black" || d === "black"){
+					alert("Black Wins!");
+>>>>>>> FETCH_HEAD
 				}
 			}
 		</script>
