@@ -49,7 +49,7 @@
 			}
 			
 			function checkVert(){
-				console.log("checking verticle");
+				//console.log("checking verticle");
 				var red = 0;
 				var black = 0;
 				for(a=0;a<board.column.length;a++){
@@ -58,9 +58,9 @@
 						var y = x.children[b];
 						if(y.colorId === true){
 							red++;
-							console.log("red:"+red);
+							//console.log("red:"+red);
 							if(red === 4){
-								console.log(red);
+								//console.log(red);
 								return "red"; break;
 								break;
 							}
@@ -70,7 +70,7 @@
 						}
 						if(y.colorId === false){
 							black++;
-							console.log("black:"+black);
+							//console.log("black:"+black);
 							if(black === 4){
 								return "black";
 								break;
@@ -85,7 +85,7 @@
 
 			}
 			function checkHorz(){
-				console.log("checking horizontal");
+				//console.log("checking horizontal");
 				var red = 0;
 				var black = 0;
 				var horzCheck = 0;
@@ -94,7 +94,7 @@
 						var x = board.column[a];
 						if(x.children[horzCheck].colorId === true){
 							red++;
-							console.log("red:" + red);
+							//console.log("red:" + red);
 							if(red === 4){
 								return "red"; 
 								break;
@@ -105,7 +105,7 @@
 						}
 						if(x.children[horzCheck].colorId === false){
 							black++;
-							console.log("black:" + black);
+							//console.log("black:" + black);
 							if(black === 4){
 								return "black";
 								break;
@@ -119,224 +119,101 @@
 				}
 			}
 			
-			function checkPosDiag(){
-				console.log("checking  positive diagonal");
-				var red = 0;
-				var black = 0;
-				var diff = 1;
-				var save = diff;
-				var reset = false;
-				var run = 0;
-				while(run < board.column[0].children.length){
-					for(a=0;a<board.column.length;a++){
+			function checkDiag(){
+				red = 0;
+				black = 0;
+				switch1 = true;
+				switch2 = true;
+				reset = false;
+				run = 0;
+				a = 0;
+				b = 2;
+				saveB = b;
+				while(run<board.column[0].children.length){
+					while(a<board.column.length){
 						var x = board.column[a];
-						for(b=x.children.length-diff;b>-1;b--){
-							if(b === 0){
-								reset = true;
-							}
-							if(x.children[b].colorId === true){
-								red++;
-								console.log("red:" + red);
-								if(red === 4){
-									return "red";
-									break;
+							while(b<x.children.length){
+								var y = x.children[b];
+								console.log(y);
+								if(b === x.children.length-1){
+									//console.log(b);
+									reset = true;
 								}
-							}
-							else{
-								red = 0;
-							}
-							if(x.children[b].colorId === false){
-								black++;
-								console.log("black:" + black);
-								if(black === 4){
-									return "black";
-									break;
+								if(b === 0){
+									reset = true;
 								}
-							}
-							else{
-								black = 0;
-							}
-							diff++;
-							break;
-						}
-						if(reset === true){
-							reset = false;
-							diff = save + 1;
-							save = diff;
-							break;
-						}
-					}
-					run++;
-					if(save === 4){
-						break;
-					}
-				}
-				if(run > 0){
-					run = 0;
-					diff = 1;
-					save = diff;
-				}
-				while(run < board.column[0].children.length){
-					for(a=board.column.length-1;a>0;a--){
-						var x = board.column[a];
-						for(b=diff-1;b<diff;b++){
-							if(b === x.children.length-1){
-								reset = true;
-							}
-							if(x.children[b].colorId === true){
-								red++;
-								console.log("red:" + red);
-								if(red === 4){
-									return "red"; 
-									break;
+								if(y.colorId === true){
+									red++;
+									//console.log("red:"+red);
+									if(red === 4){
+										return "red"; break;
+										break;
+									}
 								}
-							}
-							else{
-								red = 0;
-							}
-							if(x.children[b].colorId === false){
-								black++;
-								console.log("black:" + black);
-								if(black === 4){
-									return "black";
-									break;
+								else{
+									red = 0;
 								}
+								if(y.colorId === false){
+									black++;
+									//console.log("black:"+black);
+									if(black === 4){
+										return "black";
+										break;
+									}
+								}
+								else{
+									black = 0;
+								}
+								if(switch2 === true){
+									b++;
+								}
+								else{
+									b--;
+								}
+								break;
 							}
-							else{
-								black = 0;
-							}
-							diff++;
-							break;
-						}
-						if(reset === true){
-							reset = false;
-							diff = save + 1;
-							save = diff;
-							break;
-						}
+							if(reset === true){
+								reset = false;
+								if(switch2 === true){
+									b = saveB - 1;
+									saveB = b
+									if(switch1 === true){
+										a = 0;
+										red = 0;
+										black = 0;
+									}
+									else{
+										a = board.column.length;
+										red = 0;
+										black = 0;
+									}
 
-					}
-					run++;
-					if(save === 4){
-						break;
-					}
-				}
-			}
-			
-			function checkNegDiag(){
-				console.log("checking  negative diagonal");
-				var red = 0;
-				var black = 0;
-				var diff = 1;
-				var save = diff;
-				var reset = false;
-				var run = 0;
-				while(run < board.column[0].children.length){
-					for(a=0;a<board.column.length;a++){
-						var x = board.column[a];
-						for(b=diff-1;b<diff;b++){
-							if(b === x.children.length-1){
-								reset = true;
-							}
-							if(x.children[b].colorId === true){
-								red++;
-								console.log("red:" + red);
-								if(red === 4){
-									return "red"; 
-									break;
 								}
+								else{
+									b = saveB + 1;
+									saveB = b;
+									if(switch1 === true){
+										a = 0;
+										red = 0;
+										black = 0;
+									}
+									else{
+										a = board.column.length;
+										red = 0;
+										black = 0;
+									}
+								}
+								break;
+							}
+							if(switch1 === true){
+								a++;
 							}
 							else{
-								red = 0;
+								a--;
 							}
-							if(x.children[b].colorId === false){
-								black++;
-								console.log("black:" + black);
-								if(black === 4){
-									return "black";
-									break;
-								}
-							}
-							else{
-								black = 0;
-							}
-							diff++;
-							break;
-						}
-						if(reset === true){
-							reset = false;
-							diff = save + 1;
-							save = diff;
-							break;
-						}
 					}
-					run++;
-					if(save === 4){
-						break;
-					}
-				}
-				if(run > 0){
-					run = 0;
-					diff = 1;
-					save = diff;
-				}
-				while(run < board.column[0].children.length){
-					for(a=board.column.length-1;a>0;a--){
-						var x = board.column[a];
-						for(b=x.children.length-diff;b>-1;b--){
-							if(b === 0){
-								reset = true;
-							}
-							if(x.children[b].colorId === true){
-								red++;
-								console.log("red:" + red);
-								if(red === 4){
-									return "red"; 
-									break;
-								}
-							}
-							else{
-								red = 0;
-							}
-							if(x.children[b].colorId === false){
-								black++;
-								console.log("black:" + black);
-								if(black === 4){
-									return "black";
-									break;
-								}
-							}
-							else{
-								black = 0;
-							}
-							diff++;
-							break;
-						}
-						if(reset === true){
-							reset = false;
-							diff = save + 1;
-							save = diff;
-							break;
-						}
-
-					}
-					run++;
-					if(save === 4){
-						break;
-					}
-				}
-			}
-			
-			function checkWin(){
-				var a = checkVert();
-				var b = checkHorz();
-				var c = checkPosDiag();
-				var d = checkNegDiag();
-				if(a === "red" || b === "red" || c === "red" || d === "red"){
-					alert("you win");
-				}
-				else if(a === "black" || b === "black" || c === "black" || d === "black"){
-					alert("yo win");
+					
+					run++
 				}
 			}
 		</script>
