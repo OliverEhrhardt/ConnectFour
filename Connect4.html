@@ -129,17 +129,18 @@
 				a = 0;
 				b = 2;
 				saveB = b;
-				while(run<board.column[0].children.length){
-					while(a<board.column.length){
+				while(run<board.column[0].children.length*2){
+					while(a<board.column.length && a>-1){
 						var x = board.column[a];
-							while(b<x.children.length){
+							while(b<x.children.length && b>-1){
 								var y = x.children[b];
+								//y.style.border = "2px solid white";
 								console.log(y);
-								if(b === x.children.length-1){
+								if(b === x.children.length-1 && switch2 === true){
 									//console.log(b);
 									reset = true;
 								}
-								if(b === 0){
+								if(b === 0 && switch2 === false){
 									reset = true;
 								}
 								if(y.colorId === true){
@@ -174,16 +175,23 @@
 							}
 							if(reset === true){
 								reset = false;
+								//console.log(b);
 								if(switch2 === true){
 									b = saveB - 1;
+									//console.log(b);
 									saveB = b
+									if(saveB === -1){
+										switch2 = false;
+										b = 3;
+										saveB = b;
+									}
 									if(switch1 === true){
 										a = 0;
 										red = 0;
 										black = 0;
 									}
 									else{
-										a = board.column.length;
+										a = board.column.length - 1;
 										red = 0;
 										black = 0;
 									}
@@ -191,14 +199,23 @@
 								}
 								else{
 									b = saveB + 1;
+									//console.log(b);
 									saveB = b;
+									if(saveB === x.children.length){
+										//console.log(saveB);
+										switch1 = false;
+										switch2 = true;
+										b = 2;
+										saveB = b;
+									}
 									if(switch1 === true){
 										a = 0;
 										red = 0;
 										black = 0;
 									}
 									else{
-										a = board.column.length;
+										a = board.column.length-1;
+										//console.log(a);
 										red = 0;
 										black = 0;
 									}
@@ -212,24 +229,16 @@
 								a--;
 							}
 					}
-<<<<<<< HEAD
 					
 					run++
-=======
 				}
 			}
-			
 			function checkWin(){
-				var a = checkVert();
-				var b = checkHorz();
-				var c = checkPosDiag();
-				var d = checkNegDiag();
-				if(a === "red" || b === "red" || c === "red" || d === "red"){
-					alert("Red Wins!");
+				if(checkVert() === "red" || checkHorz() === "red" || checkDiag() === "red"){
+					alert("Red wins!");
 				}
-				else if(a === "black" || b === "black" || c === "black" || d === "black"){
-					alert("Black Wins!");
->>>>>>> FETCH_HEAD
+				else if(checkVert() === "black" || checkHorz() === "black" || checkDiag() === "black"){
+					alert("Fucking Turquois wins!");
 				}
 			}
 		</script>
