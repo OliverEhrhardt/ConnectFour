@@ -2,14 +2,18 @@
 <html>
 	<head>
 		<script type="text/javascript">
+			var turn = true;
+
 			window.onload = function(){
 				board = new build($("container").children, 1, null);
 				document.getElementById("container").addEventListener("click", isTurn, false);
 			}
+			
 			function $(id){
 				return document.getElementById(id);
 			}
-			var turn = true;
+			
+			//tells player who's turn it is
 			function isTurn(){
 				var x = $("turns");
 				if(turn === true){
@@ -21,6 +25,8 @@
 					x.style.color = "#005d78";
 				}
 			}
+			
+			//class for board
 			function build(column, pieces, colorId){				
 				this.column = column;
 				for(var a in this.column){
@@ -44,205 +50,161 @@
 						x.pieces++;
 						turn = true;
 					}
-					checkWin();
+					scan();
 				}
 			}
 			
-			function checkVert(){
-				//console.log("checking verticle");
-				var red = 0;
-				var black = 0;
-				for(a=0;a<board.column.length;a++){
-					var x = board.column[a];
-					for(b=0;b<x.children.length;b++){
-						var y = x.children[b];
-						if(y.colorId === true){
-							red++;
-							//console.log("red:"+red);
-							if(red === 4){
-								//console.log(red);
-								return "red"; break;
-								break;
-							}
-						}
-						else{
-							red = 0;
-						}
-						if(y.colorId === false){
-							black++;
-							//console.log("black:"+black);
-							if(black === 4){
-								return "black";
-								break;
-							}
-						}
-						else{
-							black = 0;
-						}
-					}
-					red = 0;
-					black = 0;
-
-				}
-
-			}
-			function checkHorz(){
-				//console.log("checking horizontal");
-				var red = 0;
-				var black = 0;
-				var horzCheck = 0;
-				while(horzCheck < board.column[0].children.length){
-					for(a = 0;a<board.column.length;a++){
-						var x = board.column[a];
-						if(x.children[horzCheck].colorId === true){
-							red++;
-							//console.log("red:" + red);
-							if(red === 4){
-								return "red"; 
-								break;
-							}
-						}
-						else{
-							red = 0;
-						}
-						if(x.children[horzCheck].colorId === false){
-							black++;
-							//console.log("black:" + black);
-							if(black === 4){
-								return "black";
-								break;
-							}
-						}
-						else{
-							black = 0;
-						}
-					}
-					red = 0;
-					black = 0;
-					horzCheck++;
-				}
-			}
-			
-			function checkDiag(){
+			//scans board for potential win
+			function scan(){
 				red = 0;
 				black = 0;
 				switch1 = true;
 				switch2 = true;
+				switch3 = true;
+				switch4 = true;
 				reset = false;
 				run = 0;
 				a = 0;
-				b = 2;
+				b = 0;
 				saveB = b;
-				while(run<board.column[0].children.length*2){
+				while(run<board.column[0].children.length*4){
 					while(a<board.column.length && a>-1){
 						var x = board.column[a];
-							while(b<x.children.length && b>-1){
-								var y = x.children[b];
-								//y.style.border = "2px solid white";
-								console.log(y);
+						while(b<x.children.length && b>-1){
+							var y = x.children[b];
+							//y.style.border = "2px solid white";
+							//console.log(y);
+							//console.log(b);
+							//console.log(red, black);
+							if(switch4 === false){
 								if(b === x.children.length-1 && switch2 === true){
 									//console.log(b);
+									//console.log(saveB);
 									reset = true;
 								}
 								if(b === 0 && switch2 === false){
 									reset = true;
 								}
-								if(y.colorId === true){
-									red++;
-									//console.log("red:"+red);
-									if(red === 4){
-										return "red"; break;
-										break;
-									}
-								}
-								else{
-									red = 0;
-								}
-								if(y.colorId === false){
-									black++;
-									//console.log("black:"+black);
-									if(black === 4){
-										return "black";
-										break;
-									}
-								}
-								else{
-									black = 0;
-								}
-								if(switch2 === true){
-									b++;
-								}
-								else{
-									b--;
-								}
-								break;
 							}
-							if(reset === true){
-								reset = false;
-								//console.log(b);
-								if(switch2 === true){
-									b = saveB - 1;
-									//console.log(b);
-									saveB = b
-									if(saveB === -1){
-										switch2 = false;
-										b = 3;
-										saveB = b;
-									}
-									if(switch1 === true){
-										a = 0;
-										red = 0;
-										black = 0;
-									}
-									else{
-										a = board.column.length - 1;
-										red = 0;
-										black = 0;
-									}
-
+							//console.log(b);
+							if(y.colorId === true){
+								red++;
+								//console.log("red:"+red);
+								if(red === 4){
+									alert("Red Wins!"); //Will change later
+									break;
 								}
-								else{
-									b = saveB + 1;
-									//console.log(b);
-									saveB = b;
-									if(saveB === x.children.length){
-										//console.log(saveB);
-										switch1 = false;
-										switch2 = true;
-										b = 2;
-										saveB = b;
-									}
-									if(switch1 === true){
-										a = 0;
-										red = 0;
-										black = 0;
-									}
-									else{
-										a = board.column.length-1;
-										//console.log(a);
-										red = 0;
-										black = 0;
-									}
-								}
-								break;
-							}
-							if(switch1 === true){
-								a++;
 							}
 							else{
-								a--;
+								red = 0;
 							}
+							if(y.colorId === false){
+								black++;
+								//console.log("black:"+black);
+								if(black === 4){
+									alert("Black Wins!"); //Will change later
+									break;
+								}
+							}
+							else{
+								black = 0;
+							}
+							//console.log(b);
+							if(switch2 === true){
+								if(switch3 === false){
+									if(a === board.column.length-1){
+										a = -1;
+										b++;
+										if(b === board.column[0].children.length){
+											b = 2;
+											saveB = b;
+											switch4 = false;
+											switch3 = true;
+										}
+										break;
+									}
+									else{
+										break;
+									}
+								}
+								b++;
+							}
+							else{
+								b--;
+							}
+							//console.log(b);
+							if(switch4 === false){
+								break;
+							}
+						}
+						if(reset === true){
+							reset = false;
+							//console.log(b);
+							if(switch2 === true){
+								b = saveB - 1;
+								//console.log(b);
+								saveB = b
+								if(saveB === -1){
+									switch2 = false;
+									b = 3;
+									saveB = b;
+								}
+								if(switch1 === true){
+									a = 0;
+									red = 0;
+									black = 0;
+								}
+								else{
+									a = board.column.length - 1;
+									red = 0;
+									black = 0;
+								}
+
+							}
+							else{
+								b = saveB + 1;
+								//console.log(b);
+								saveB = b;
+								if(saveB === x.children.length){
+									//console.log(saveB);
+									switch1 = false;
+									switch2 = true;
+									b = 2;
+									saveB = b;
+								}
+								if(switch1 === true){
+									a = 0;
+									red = 0;
+									black = 0;
+								}
+								else{
+									a = board.column.length-1;
+									//console.log(a);
+									red = 0;
+									black = 0;
+								}
+							}
+							break;
+						}
+						if(switch1 === true){
+							a++;
+						}
+						else{
+							a--;
+						}
+						//console.log(a);
+						if(switch3 === true && switch4 === true){
+							b = 0;
+							red = 0;
+							black = 0;
+							if(a === board.column.length){
+								a = 0;
+								switch3 = false;
+							}
+						}
 					}
 					
 					run++
-				}
-			}
-			function checkWin(){
-				if(checkVert() === "red" || checkHorz() === "red" || checkDiag() === "red"){
-					alert("Red wins!");
-				}
-				else if(checkVert() === "black" || checkHorz() === "black" || checkDiag() === "black"){
-					alert("Fucking Turquois wins!");
 				}
 			}
 		</script>
